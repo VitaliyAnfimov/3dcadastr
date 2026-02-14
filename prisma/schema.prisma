@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Parcel {
+  id              String   @id @default(cuid())
+  cadastralNumber String   @unique
+  areaM2          Float
+  category        String
+  permittedUse    String
+  footprintGeoJson Json
+  createdAt       DateTime @default(now())
+  buildings       CadastreBuilding[]
+}
+
+model CadastreBuilding {
+  id              String   @id @default(cuid())
+  cadastralNumber String   @unique
+  address         String
+  floors          Int
+  lon             Float
+  lat             Float
+  heightM         Float
+  createdAt       DateTime @default(now())
+
+  parcelId String?
+  parcel   Parcel?  @relation(fields: [parcelId], references: [id])
+
+  premises Premise[]
+}
+
+model Premise {
+  id              String   @id @default(cuid())
+  cadastralNumber String   @unique
+  floor           Int
+  areaM2          Float
+  createdAt       DateTime @default(now())
+
+  buildingId String
+  building   CadastreBuilding @relation(fields: [buildingId], references: [id])
+}
+
+model OsmBuilding {
+  id              String   @id @default(cuid())
+  osmType         String
+  osmId           String   @unique
+  name            String?
+  levels          Int?
+  heightM         Float?
+  footprintGeoJson Json
+  centroidLon     Float
+  centroidLat     Float
+  bboxKey         String
+  createdAt       DateTime @default(now())
+}
