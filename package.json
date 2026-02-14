@@ -2,13 +2,13 @@
   "name": "cadastre-3d-kotovsk",
   "private": true,
   "scripts": {
-  "dev": "next dev",
-  "build": "next build",
-  "start": "next start -p $PORT"
-},
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start -p $PORT"
+  },
   "dependencies": {
     "@prisma/client": "^5.20.0",
-    "next": "14.2.5",
+    "next": "^14.2.35",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "three": "^0.182.0"
